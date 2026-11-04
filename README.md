@@ -9,7 +9,7 @@ A full-stack e-commerce application: a native **Android** client written in **Ja
 | Layer    | Technologies |
 |----------|--------------|
 | Android  | Java 17, MVVM, Jetpack (ViewModel, LiveData, Navigation, Room), Hilt, Retrofit, Material 3 |
-| Backend  | Java 17, Spring Boot 3, Spring Security + JWT, Spring Data JPA, Flyway |
+| Backend  | Java 17, Spring Boot 4, Spring Security + JWT, Spring Data JPA, Flyway |
 | Database | MySQL 8 (Docker) |
 | DevOps   | Docker Compose, GitHub Actions |
 
@@ -33,7 +33,33 @@ tizvagt/
 
 ## Getting Started
 
-Setup instructions will be added as each module is implemented.
+### Prerequisites
+
+- JDK 17
+- Docker
+
+### Backend
+
+```bash
+# 1. (optional) override defaults
+cp .env.example .env
+
+# 2. start MySQL (exposed on localhost:3307)
+docker compose up -d
+
+# 3. run the API
+cd backend
+./gradlew bootRun
+```
+
+Check it is running: <http://localhost:8080/actuator/health>
+
+Run tests (uses Testcontainers, Docker must be running):
+
+```bash
+cd backend
+./gradlew test
+```
 
 ## License
 
