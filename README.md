@@ -15,7 +15,7 @@ A full-stack e-commerce application: a native **Android** client written in **Ja
 
 ## Features
 
-- [ ] User registration & login (JWT)
+- [x] User registration & login (JWT)
 - [ ] Product catalog with categories, search and filtering
 - [ ] Shopping cart & checkout (mock payment)
 - [ ] Order history
@@ -60,6 +60,16 @@ Run tests (uses Testcontainers, Docker must be running):
 cd backend
 ./gradlew test
 ```
+
+## API
+
+| Method | Endpoint             | Auth | Description              |
+|--------|----------------------|------|--------------------------|
+| POST   | `/api/auth/register` | –    | Create an account        |
+| POST   | `/api/auth/login`    | –    | Log in, returns a JWT    |
+| GET    | `/api/users/me`      | JWT  | Current user's profile   |
+
+Authenticated requests send the token as `Authorization: Bearer <token>`.
 
 ## License
 

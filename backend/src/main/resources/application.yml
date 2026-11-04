@@ -27,3 +27,9 @@ management:
   endpoint:
     health:
       show-details: always
+
+app:
+  jwt:
+    # Dev-only default. Always set JWT_SECRET (base64, at least 32 bytes) in production.
+    secret: ${JWT_SECRET:ZGV2LW9ubHktc2VjcmV0LWNoYW5nZS1tZS1pbi1wcm9kdWN0aW9uLTEyMzQ1Ng==}
+    expiration: ${JWT_EXPIRATION:24h}
