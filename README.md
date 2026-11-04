@@ -16,7 +16,7 @@ A full-stack e-commerce application: a native **Android** client written in **Ja
 ## Features
 
 - [x] User registration & login (JWT)
-- [ ] Product catalog with categories, search and filtering
+- [x] Product catalog with categories, search and filtering
 - [ ] Shopping cart & checkout (mock payment)
 - [ ] Order history
 - [ ] Favorites
@@ -68,6 +68,12 @@ cd backend
 | POST   | `/api/auth/register` | –    | Create an account        |
 | POST   | `/api/auth/login`    | –    | Log in, returns a JWT    |
 | GET    | `/api/users/me`      | JWT  | Current user's profile   |
+| GET    | `/api/products`      | –    | List products (search, filter, paging, sort) |
+| GET    | `/api/products/{id}` | –    | Product details          |
+| POST   | `/api/products/{id}/image` | ADMIN | Upload product image (JPEG/PNG/WEBP, max 5 MB) |
+| GET    | `/api/categories`    | –    | List categories          |
+
+Product list query parameters: `search`, `categoryId`, `minPrice`, `maxPrice`, `page`, `size` (max 100), `sort` (e.g. `price,asc`).
 
 Authenticated requests send the token as `Authorization: Bearer <token>`.
 
