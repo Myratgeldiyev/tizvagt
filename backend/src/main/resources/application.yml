@@ -9,6 +9,10 @@ spring:
 
   jpa:
     open-in-view: false
+    properties:
+      hibernate:
+        # Loads lazy collections for up to 50 parents in one query instead of one query each.
+        default_batch_fetch_size: 50
     hibernate:
       ddl-auto: validate
 

@@ -17,8 +17,8 @@ A full-stack e-commerce application: a native **Android** client written in **Ja
 
 - [x] User registration & login (JWT)
 - [x] Product catalog with categories, search and filtering
-- [ ] Shopping cart & checkout (mock payment)
-- [ ] Order history
+- [x] Shopping cart & checkout (mock payment)
+- [x] Order history & cancellation
 - [ ] Favorites
 - [ ] Admin API for managing products and images
 
@@ -72,10 +72,26 @@ cd backend
 | GET    | `/api/products/{id}` | –    | Product details          |
 | POST   | `/api/products/{id}/image` | ADMIN | Upload product image (JPEG/PNG/WEBP, max 5 MB) |
 | GET    | `/api/categories`    | –    | List categories          |
+| GET    | `/api/cart`          | JWT  | Current cart with totals |
+| POST   | `/api/cart/items`    | JWT  | Add product to cart      |
+| PATCH  | `/api/cart/items/{productId}` | JWT | Change quantity   |
+| DELETE | `/api/cart/items/{productId}` | JWT | Remove product    |
+| DELETE | `/api/cart`          | JWT  | Empty the cart           |
+| POST   | `/api/orders`        | JWT  | Checkout (mock payment)  |
+| GET    | `/api/orders`        | JWT  | Own order history        |
+| GET    | `/api/orders/{id}`   | JWT  | Order details            |
+| POST   | `/api/orders/{id}/cancel` | JWT | Cancel a paid order and restock |
 
 Product list query parameters: `search`, `categoryId`, `minPrice`, `maxPrice`, `page`, `size` (max 100), `sort` (e.g. `price,asc`).
 
 Authenticated requests send the token as `Authorization: Bearer <token>`.
+
+## Design Notes
+
+- **No overselling:** stock is decreased with a single atomic `UPDATE ... WHERE stock >= ?`, verified by a concurrent checkout test.
+- **All-or-nothing checkout:** stock, order and cart changes run in one transaction.
+- **Price snapshots:** order items store the name and price at checkout time.
+- **Ownership checks:** orders are always queried by `id` *and* `userId`, so users can't read others' orders (IDOR).
 
 ## License
 
